@@ -2,10 +2,11 @@ import os
 import time
 import urllib.request
 
-import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.common import NoSuchElementException
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def crawl(search: str, dir_name: str, pause_time: int = 1):
@@ -16,9 +17,7 @@ def crawl(search: str, dir_name: str, pause_time: int = 1):
     :param pause_time: time to wait for page to load
     """
 
-    chromedriver_autoinstaller.install()
-
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
     try:
         driver.get("https://www.google.com/search?q={}&tbm=isch&source=hp&sclient=img".format(search))
